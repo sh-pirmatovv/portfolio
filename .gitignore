@@ -1,0 +1,16 @@
+node_modules
+.next
+dist
+build
+.turbo
+.DS_Store
+.idea
+.env
+.env.local
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+coverage
+apps/api/core/.mypy_cache
+apps/api/core/.ruff_cache

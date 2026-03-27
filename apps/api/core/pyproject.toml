@@ -1,0 +1,20 @@
+[project]
+name = "portfolio-core"
+version = "0.1.0"
+description = "Shared FastAPI backend core for Shahzodbek Pirmatov's premium portfolio ecosystem."
+requires-python = ">=3.13"
+dependencies = [
+  "fastapi>=0.115.6",
+  "pydantic>=2.10.3",
+  "pydantic-settings>=2.7.0",
+  "uvicorn>=0.34.0"
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+

@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  portfolio:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.web
+      args:
+        APP_PATH: apps/web/portfolio
+    ports:
+      - "3000:3000"
+    env_file: .env.example
+
+  monitoring:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.web
+      args:
+        APP_PATH: apps/web/monitoring
+    ports:
+      - "3001:3001"
+    env_file: .env.example
+
+  api:
+    build:
+      context: ./apps/api/core
+      dockerfile: ../../infra/docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    env_file: .env.example
+
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: portfolio
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: portfolio
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
