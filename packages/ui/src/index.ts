@@ -1,8 +1,10 @@
 export * from "./components/activity-timeline";
 export * from "./components/glass-card";
+export * from "./components/heartbeat-grid";
 export * from "./components/metric-card";
+export * from "./components/project-health-list";
 export * from "./components/project-grid";
 export * from "./components/section-heading";
 export * from "./components/site-showcase";
+export * from "./components/status-badge";
 export * from "./lib/theme";
-
