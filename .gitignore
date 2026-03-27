@@ -10,6 +10,8 @@ build
 .venv
 __pycache__
 *.pyc
+*.tsbuildinfo
+*.egg-info
 .pytest_cache
 coverage
 apps/api/core/.mypy_cache
