@@ -1,6 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Header
 
-from app.models.schemas import AuthLoginRequest, AuthSession
+from app.models.schemas import AuthLoginRequest, AuthMe, AuthSession
 from app.services.auth import auth_service
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -12,6 +12,10 @@ def login(payload: AuthLoginRequest) -> AuthSession:
 
 
 @router.post("/logout")
-def logout() -> dict[str, str]:
-    return {"status": "logged_out"}
+def logout(x_session_token: str | None = Header(default=None)) -> dict[str, str]:
+    return auth_service.logout(x_session_token or "")
 
+
+@router.get("/me", response_model=AuthMe)
+def me(x_session_token: str | None = Header(default=None)) -> AuthMe:
+    return auth_service.require_session(x_session_token)
