@@ -1,73 +1,5 @@
-import { portfolioApi } from "@portfolio/sdk";
 import { GlassCard, MetricCard, SectionHeading, StatusBadge } from "@portfolio/ui";
-
-async function getOpsStudioData() {
-  try {
-    const [project, platform, overview] = await Promise.all([
-      portfolioApi.getProject("ops-studio"),
-      portfolioApi.getPlatform(),
-      portfolioApi.getDashboardOverview()
-    ]);
-
-    return { project, platform, overview };
-  } catch {
-    return {
-      project: {
-        slug: "ops-studio",
-        title: "Ops Studio",
-        category: "website" as const,
-        description: "A premium operational cockpit for teams that manage approvals, workflows, and execution throughput across distributed systems.",
-        stack: ["Next.js", "TypeScript", "Tailwind", "FastAPI"],
-        metricsLabel: "96.4% pipeline health",
-        status: "healthy" as const,
-        href: "/sites/ops-studio",
-        companionBots: ["lead-qualifier"],
-        companionParsers: ["lead-aggregator"]
-      },
-      platform: {
-        appName: "Shahzodbek Premium Ecosystem API",
-        environment: "development",
-        demoMode: true,
-        startedAt: new Date().toISOString(),
-        storage: {
-          databaseUrl: "postgresql+psycopg://portfolio:portfolio@localhost:5432/portfolio",
-          redisUrl: "redis://localhost:6379/0",
-          demoMode: true
-        },
-        topology: {
-          websites: 11,
-          bots: 10,
-          parsers: 10,
-          dashboards: 1,
-          backendServices: 1
-        }
-      },
-      overview: {
-        snapshot: {
-          activeServices: 33,
-          automationRuns: 1284,
-          requestsPerMinute: 486,
-          uptime: "0h 0m"
-        },
-        heartbeats: [],
-        activity: []
-      }
-    };
-  }
-}
-
-const leadQueue = [
-  { account: "Northstar Logistics", stage: "Qualified", signal: "Need workflow automation and reporting", priority: "P1" },
-  { account: "Aster Commerce", stage: "Review", signal: "Multi-team approval bottleneck detected", priority: "P2" },
-  { account: "Helio Labs", stage: "Escalated", signal: "Executive dashboard launch requested", priority: "P1" }
-];
-
-const systemFlow = [
-  { title: "Lead Aggregator", detail: "Collects high-fit B2B leads from demo sources and normalizes them for routing." },
-  { title: "Lead Qualifier Bot", detail: "Scores inbound leads, prepares qualification notes, and pushes usage telemetry." },
-  { title: "Ops Studio Console", detail: "Displays queue state, approvals, and execution pressure inside the premium operator UI." },
-  { title: "Monitoring Core", detail: "Tracks heartbeat freshness, throughput, and recent incidents for the whole slice." }
-];
+import { getOpsStudioData, leadQueue, systemFlow } from "./lib/ops-data";
 
 export default async function Page() {
   const { project, platform, overview } = await getOpsStudioData();
@@ -126,6 +58,7 @@ export default async function Page() {
                     <span className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.24em] text-slate-300">{item.stage}</span>
                   </div>
                   <p className="mt-4 text-sm leading-6 text-slate-400">{item.signal}</p>
+                  <p className="mt-3 text-xs uppercase tracking-[0.22em] text-slate-500">Owner · {item.owner}</p>
                 </div>
               ))}
             </div>
